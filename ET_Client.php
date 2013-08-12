@@ -1008,6 +1008,13 @@ class ET_TriggeredSend extends ET_CUDSupport {
 	}
 }
 
+class ET_Organization extends ET_CUDSupport {
+	function __construct() {
+		$this->obj = "Account";
+	}
+}
+
+
 
 function restGet($url) {
 	$ch = curl_init();
