@@ -29,10 +29,9 @@ try {
 		print 'Results Length: '. count($getResponse->results)."\n";
 		print "\n---------------\n";
 	}
-
 	
 	$CustomerKeyofExistingOrganization = '1CC25B77-8BF9-4BF9-A718-168928AB0607';
-	$CustomerKeyOfTestOrganization = "TestOrganizationCustomerKey";
+	$CustomerKeyOfTestOrganization = "TestOrganizationCustomerKey::" . substr(md5(rand()),0,7);
 	$NameOfTestOrganization = "TestOrganizationName";
 
 
@@ -40,7 +39,7 @@ try {
 	print "Retrieve Specific Organization \n";
 	$getOrganization = new ET_Organization();
 	$getOrganization->authStub = $myclient;
-	$getOrganization->props = array("ID", "Name");
+	$getOrganization->props = array("ID", "Name", "IsActive");
 	$getOrganization->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => $CustomerKeyofExistingOrganization);
 	$getResponse = $getOrganization->get();
 	print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
@@ -52,8 +51,9 @@ try {
 	
 	$TestOrganizationID = $getResponse->results[0]->ID;
 	$TestOrganizationName = $getResponse->results[0]->Name;
-	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName."\n");	
-
+	$TestOrganizationIsActive = $getResponse->results[0]->IsActive;
+	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName.", IsActrive: " .$TestOrganizationIsActive."\n");	
+	print "\n---------------\n";
 
 
 	// Create Organization
@@ -75,7 +75,7 @@ try {
 	print "Retrieve newly created Organization \n";
 	$getOrganization = new ET_Organization();
 	$getOrganization->authStub = $myclient;
-	$getOrganization->props = array("ID", "Name");
+	$getOrganization->props = array("ID", "Name", "IsActive");
 	$getOrganization->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => $CustomerKeyOfTestOrganization);
 	$getResponse = $getOrganization->get();
 	print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
@@ -87,7 +87,9 @@ try {
 	
 	$TestOrganizationID = $getResponse->results[0]->ID;
 	$TestOrganizationName = $getResponse->results[0]->Name;
-	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName."\n");
+	$TestOrganizationIsActive = $getResponse->results[0]->IsActive;
+	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName.", IsActrive: " .$TestOrganizationIsActive."\n");
+	print "\n---------------\n";
 	
 	
 	// Update Organization
@@ -110,8 +112,8 @@ try {
 	print "Retrieve updated Organization \n";
 	$getOrganization = new ET_Organization();
 	$getOrganization->authStub = $myclient;
-	$getOrganization->props = array("ID", "Name");
-	//$getOrganization->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => $CustomerKeyOfTestOrganization);
+	$getOrganization->props = array("ID", "Name", "IsActive");
+	$getOrganization->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => $CustomerKeyOfTestOrganization);
 	$getResponse = $getOrganization->get();
 	print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
 	print 'Code: '.$getResponse->code."\n";
@@ -122,8 +124,9 @@ try {
 	
 	$TestOrganizationID = $getResponse->results[0]->ID;
 	$TestOrganizationName = $getResponse->results[0]->Name;
-	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName."\n");
-	
+	$TestOrganizationIsActive = $getResponse->results[0]->IsActive;
+	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName.", IsActrive: " .$TestOrganizationIsActive."\n");
+	print "\n---------------\n";
 	
 	
 	// Delete Organization
@@ -146,7 +149,7 @@ try {
 	print "Retrieve Organization to confirm deletion \n";
 	$getOrganization = new ET_Organization();
 	$getOrganization->authStub = $myclient;
-	$getOrganization->props = array("ID", "Name");
+	$getOrganization->props = array("ID", "Name", "IsActive");
 	$getOrganization->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => $CustomerKeyOfTestOrganization);
 	$getResponse = $getOrganization->get();
 	print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
@@ -154,6 +157,12 @@ try {
 	print 'Message: '.$getResponse->message."\n";
 	print_r('More Results: '.($getResponse->moreResults ? 'true' : 'false')."\n");
 	print 'Results Length: '. count($getResponse->results)."\n";
+	print "\n---------------\n";
+	
+	$TestOrganizationID = $getResponse->results[0]->ID;
+	$TestOrganizationName = $getResponse->results[0]->Name;
+	$TestOrganizationIsActive = $getResponse->results[0]->IsActive;
+	print_r('Test Organization ID: '.$TestOrganizationID.', Name: '.$TestOrganizationName.", IsActrive: " .$TestOrganizationIsActive."\n");
 	print "\n---------------\n";
 	
 
